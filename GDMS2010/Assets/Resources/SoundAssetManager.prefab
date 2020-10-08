@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3097789030600394832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705089993261238936}
+  - component: {fileID: 1817446337824120682}
+  m_Layer: 0
+  m_Name: SoundAssetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1705089993261238936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3097789030600394832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6259284, y: 1.5895565, z: -2.894116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1817446337824120682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3097789030600394832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b37fb5605856c4ea89dfd6b1ba7815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundAudioClipArray:
+  - audioName: Boop
+    sound: 1
+    audioClip: {fileID: 8300000, guid: 1f8e8b4755cfbfc44b0d64c5f4cff52f, type: 3}
+    timer: 1
+    audioMixerGroup: {fileID: 8164160922553747095, guid: 5a84bc1949e767a478ea6487175163f5,
+      type: 2}
+    minDistance: 0
+    maxDistance: 20
+    zeroToOneVolume: 0.5
+    spatialBlend: 1
+    rolloffMode: 1
+  - audioName: Out of Touch
+    sound: 0
+    audioClip: {fileID: 8300000, guid: be8035d1b62a815498d868b04cf0eb41, type: 3}
+    timer: 256
+    audioMixerGroup: {fileID: 3876058651157089524, guid: 5a84bc1949e767a478ea6487175163f5,
+      type: 2}
+    minDistance: 0
+    maxDistance: 0
+    zeroToOneVolume: 0.5
+    spatialBlend: 0
+    rolloffMode: 1
