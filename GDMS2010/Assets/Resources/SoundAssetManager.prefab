@@ -47,7 +47,7 @@ MonoBehaviour:
   - audioName: Boop
     sound: 1
     audioClip: {fileID: 8300000, guid: 1f8e8b4755cfbfc44b0d64c5f4cff52f, type: 3}
-    timer: 1
+    timer: 0
     audioMixerGroup: {fileID: 8164160922553747095, guid: 5a84bc1949e767a478ea6487175163f5,
       type: 2}
     minDistance: 0
