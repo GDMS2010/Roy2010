@@ -878,7 +878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcNameText: {fileID: 2130107479}
-  npcDialouge: {fileID: 2130107479}
+  npcDialouge: {fileID: 756711227}
   dialougeBox: {fileID: 1728279367}
 --- !u!850595691 &1300954081
 LightingSettings:
