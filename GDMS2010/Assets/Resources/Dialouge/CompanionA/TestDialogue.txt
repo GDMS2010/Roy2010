@@ -1,0 +1,6 @@
+Bob;Hey there!;false;1
+Bob;Can you get me some food;True;No;2;-10;A little;3;5;Okay sure have it all;4;10;
+Bob;Well thats not ok;false;5;
+Bob;Thank you;false;false;5;
+Bob;Thanks so much!;false;5;
+Player;Later Bob;false;-1;

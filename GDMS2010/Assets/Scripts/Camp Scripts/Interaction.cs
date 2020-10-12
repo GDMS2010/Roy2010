@@ -89,7 +89,7 @@ public class Interaction : MonoBehaviour
         text = textFile.ToString(); // Converts to string
         temp = text.Split('\n'); // Splits per newline
 
-        lines = new string[temp.Length,9];
+        lines = new string[temp.Length,13];
 
         for (int i = 0; i < temp.Length; i++)
         {
@@ -115,7 +115,7 @@ public class Interaction : MonoBehaviour
         }
 
         // Plays sound effect for feedback
-        SoundManager.PlaySound(SoundManager.Sound.Boop);
+        //SoundManager.PlaySound(SoundManager.Sound.Boop);
 
         npcNameText.text = lines[_index,0];
         npcDialouge.text = lines[_index,1];
