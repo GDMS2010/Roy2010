@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
@@ -11,13 +12,28 @@ public class Interaction : MonoBehaviour
     UnityEngine.UI.Text npcDialouge = null;
     [SerializeField]
     UnityEngine.GameObject dialougeBox = null;
+    [SerializeField]
+    UnityEngine.UI.Text dialogueOptionA = null;
+    [SerializeField]
+    UnityEngine.UI.Text dialogueOptionB = null;
+    [SerializeField]
+    UnityEngine.UI.Text dialogueOptionC = null;
+    [SerializeField]
+    UnityEngine.GameObject dialougeOptionsBox = null;
+    [SerializeField]
+    UnityEngine.GameObject continueButton = null;
 
     // text file to dialouge box loading variables
     TextAsset textFile;
     string text;
     string[,] lines;
-    int currentLine = 0;
-    int maxLines = 0;
+    int nextIndex = 0;
+    int optionAIndex = 0;
+    int optionBIndex = 0;
+    int optionCIndex = 0;
+    int optionAAffection = 0;
+    int optionBAffection = 0;
+    int optionCAffection = 0;
 
     GameObject current = null;
     // Start is called before the first frame update
@@ -25,6 +41,7 @@ public class Interaction : MonoBehaviour
     {
         SoundManager.Initialize();
         dialougeBox.SetActive(false);
+        dialougeOptionsBox.SetActive(false);
         //SoundManager.PlaySound(SoundManager.Sound.BackgroundMusic);
     }
 
@@ -46,7 +63,7 @@ public class Interaction : MonoBehaviour
                 if(current.GetComponent<BaseCompanion>().GetStat(BaseCompanion.Statistic.Dialouge) < current.GetComponent<BaseCompanion>().Filenames.Length)
                 {
                     SetCompanionDialouge(current);
-                    currentLine = 0;
+                    nextIndex = 0;
 
                     // incrementing Affection
                     current.GetComponent<BaseCompanion>().ModifyStat(BaseCompanion.Statistic.Affection, 1);
@@ -54,13 +71,13 @@ public class Interaction : MonoBehaviour
 
                     // Assigns Dialouge to true and sets params
                     dialougeBox.SetActive(true);
-                    AdvanceDialouge();
+                    AdvanceDialouge(nextIndex);
                 }
             }
-            else if(dialougeBox.activeSelf == true)
-            {
-                AdvanceDialouge();
-            }
+            //else if(dialougeBox.activeSelf == true)
+            //{
+            //    AdvanceDialouge(nextIndex);
+            //}
         }
     }
 
@@ -71,35 +88,90 @@ public class Interaction : MonoBehaviour
         current.GetComponent<BaseCompanion>().ModifyStat(BaseCompanion.Statistic.Dialouge, 1);
         text = textFile.ToString(); // Converts to string
         temp = text.Split('\n'); // Splits per newline
-        maxLines = temp.Length;
 
-        lines = new string[temp.Length,2];
+        lines = new string[temp.Length,9];
 
         for (int i = 0; i < temp.Length; i++)
         {
             string[] temp2;
             temp2 = temp[i].Split(';');
 
-            lines[i,0] = temp2[0];
-            lines[i,1] = temp2[1];
+            for (int j = 0; j < temp2.Length; j++)
+            {
+                lines[i, j] = temp2[j];
+            }
         }
     }
 
-    void AdvanceDialouge()
+    void AdvanceDialouge(int _index)
     {
-        // Plays sound effect for feedback
-        SoundManager.PlaySound(SoundManager.Sound.Boop);
-
-        npcNameText.text = lines[currentLine,0];
-        npcDialouge.text = lines[currentLine,1];
-        currentLine++;
-
-        if (currentLine >= maxLines)
+        if (_index < 0)
         {
             // Resetting everything
             dialougeBox.SetActive(false);
-            currentLine = 0;
-            maxLines = 0;
+            dialougeOptionsBox.SetActive(false);
+            nextIndex = 0;
+            return;
+        }
+
+        // Plays sound effect for feedback
+        SoundManager.PlaySound(SoundManager.Sound.Boop);
+
+        npcNameText.text = lines[_index,0];
+        npcDialouge.text = lines[_index,1];
+
+        if(lines[_index, 2].Equals("false"))
+        {
+            dialougeOptionsBox.SetActive(false);
+            continueButton.SetActive(true);
+            nextIndex = Int32.Parse(lines[_index, 3]);
+            return;
+        }
+        else
+        {
+            dialougeOptionsBox.SetActive(true);
+            continueButton.SetActive(false);
+
+            dialogueOptionA.text = lines[_index, 3];
+            dialogueOptionB.text = lines[_index, 6];
+            dialogueOptionC.text = lines[_index, 9];
+
+            optionAIndex = Int32.Parse(lines[_index, 4]);
+            optionBIndex = Int32.Parse(lines[_index, 7]);
+            optionCIndex = Int32.Parse(lines[_index, 10]);
+
+            optionAAffection = Int32.Parse(lines[_index, 5]);
+            optionBAffection = Int32.Parse(lines[_index, 8]);
+            optionCAffection = Int32.Parse(lines[_index, 11]);
+        }
+    }
+
+    // Pass 1 for continue, 2 for option A, 3 for option B, 4 for option C
+    public void ContinueButton(int _button)
+    {
+        switch (_button)
+        {
+            default:
+                break;
+
+            case 1:
+                AdvanceDialouge(nextIndex);
+                break;
+
+            case 2:
+                current.GetComponent<BaseCompanion>().ModifyStat(BaseCompanion.Statistic.Affection, optionAAffection);
+                AdvanceDialouge(optionAIndex);
+                break;
+
+            case 3:
+                current.GetComponent<BaseCompanion>().ModifyStat(BaseCompanion.Statistic.Affection, optionBAffection);
+                AdvanceDialouge(optionBIndex);
+                break;
+
+            case 4:
+                current.GetComponent<BaseCompanion>().ModifyStat(BaseCompanion.Statistic.Affection, optionCAffection);
+                AdvanceDialouge(optionCIndex);
+                break;
         }
     }
 }
