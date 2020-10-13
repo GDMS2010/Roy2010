@@ -1654,6 +1654,16 @@ PrefabInstance:
       propertyPath: PatrolPoints.Array.data[3]
       value: 
       objectReference: {fileID: 484959211}
+    - target: {fileID: 8899769319106512304, guid: 9453fe893e9955b4b872fa6c97cdfb3b,
+        type: 3}
+      propertyPath: hearingDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8899769319106512304, guid: 9453fe893e9955b4b872fa6c97cdfb3b,
+        type: 3}
+      propertyPath: visualScanDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8899769319106512305, guid: 9453fe893e9955b4b872fa6c97cdfb3b,
         type: 3}
       propertyPath: m_Name

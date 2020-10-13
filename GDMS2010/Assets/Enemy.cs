@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(SphereCollider))]
 public class Enemy : MonoBehaviour
 {
     public enum State { Idle, Patrol, Alerted, Search, Chase, Attack, Dead}
@@ -42,6 +43,7 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy Can't find Player!");
         }
         timer = idleTime;
+        GetComponent<SphereCollider>().radius = hearingDistance;
     }
 
     // Update is called once per frame
