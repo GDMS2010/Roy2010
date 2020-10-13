@@ -187,6 +187,12 @@ public class Enemy : MonoBehaviour
 
     bool isPlayerNearby()
     {
+        if(!player)
+            player = GameObject.FindGameObjectWithTag("Player");
+        if (!player)
+        {
+            Debug.LogError("Enemy Can't find Player!");
+        }
         Vector3 toPlayer = player.transform.position - this.transform.position;
         float distance = toPlayer.magnitude;
         if (distance > visualScanDistance)
