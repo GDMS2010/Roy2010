@@ -22,6 +22,10 @@ public class Interaction : MonoBehaviour
     UnityEngine.GameObject dialougeOptionsBox = null;
     [SerializeField]
     UnityEngine.GameObject continueButton = null;
+    [SerializeField]
+    UnityEngine.UI.Image characterPortrait  = null;
+    [SerializeField]
+    UnityEngine.GameObject characterPortraitObject = null;
 
     // text file to dialouge box loading variables
     TextAsset textFile;
@@ -42,6 +46,7 @@ public class Interaction : MonoBehaviour
         SoundManager.Initialize();
         dialougeBox.SetActive(false);
         dialougeOptionsBox.SetActive(false);
+        characterPortraitObject.SetActive(false);
         //SoundManager.PlaySound(SoundManager.Sound.BackgroundMusic);
     }
 
@@ -74,10 +79,6 @@ public class Interaction : MonoBehaviour
                     AdvanceDialouge(nextIndex);
                 }
             }
-            //else if(dialougeBox.activeSelf == true)
-            //{
-            //    AdvanceDialouge(nextIndex);
-            //}
         }
     }
 
@@ -89,7 +90,7 @@ public class Interaction : MonoBehaviour
         text = textFile.ToString(); // Converts to string
         temp = text.Split('\n'); // Splits per newline
 
-        lines = new string[temp.Length,13];
+        lines = new string[temp.Length,14];
 
         for (int i = 0; i < temp.Length; i++)
         {
@@ -110,21 +111,24 @@ public class Interaction : MonoBehaviour
             // Resetting everything
             dialougeBox.SetActive(false);
             dialougeOptionsBox.SetActive(false);
+            characterPortraitObject.SetActive(false);
             nextIndex = 0;
             return;
         }
 
         // Plays sound effect for feedback
-        //SoundManager.PlaySound(SoundManager.Sound.Boop);
+        SoundManager.PlaySound(SoundManager.Sound.Boop);
 
         npcNameText.text = lines[_index,0];
         npcDialouge.text = lines[_index,1];
+        characterPortraitObject.SetActive(true);
 
-        if(lines[_index, 2].Equals("false"))
+        if (lines[_index, 2].Equals("false"))
         {
             dialougeOptionsBox.SetActive(false);
             continueButton.SetActive(true);
             nextIndex = Int32.Parse(lines[_index, 3]);
+            characterPortrait.sprite = Resources.Load<Sprite>(lines[_index, 4]);
             return;
         }
         else
@@ -143,6 +147,8 @@ public class Interaction : MonoBehaviour
             optionAAffection = Int32.Parse(lines[_index, 5]);
             optionBAffection = Int32.Parse(lines[_index, 8]);
             optionCAffection = Int32.Parse(lines[_index, 11]);
+
+            characterPortrait.sprite = Resources.Load<Sprite>(lines[_index, 12]);
         }
     }
 
