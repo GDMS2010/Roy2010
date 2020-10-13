@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45cf1193e1d0a54885ebc58f8394c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 4b521231ffddc4041bf51793f80ee2e5, type: 3}
   Name: Gun1
   unlocked: 0
   Damage: 10
@@ -82,3 +83,6 @@ MonoBehaviour:
   - 1.8
   - 2
   MagPerLv: 0f0000001100000013000000160000001a0000001e000000
+  currentAmmo: 15
+  MaxAmmo: 75
+  currentTotalAmmo: 75

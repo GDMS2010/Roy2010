@@ -28,4 +28,14 @@ public class Inventory : MonoBehaviour
     {
         metal += amount;
     }
+
+    public int getWeaponIndex(string name)
+    {
+        for (int i = 0; i < weaponList.Count; i++)
+        {
+            if (weaponList[i].name == name)
+                return i;
+        }
+        return -1;
+    }
 }
