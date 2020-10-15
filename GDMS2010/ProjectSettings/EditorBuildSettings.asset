@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/RefugeeCamp.unity
+    guid: fd010745b06d9a241952dcf374ae2d5c
+  - enabled: 1
+    path: Assets/MainMenu+PauseMenu/Camp/Camp.unity
+    guid: c4be0a89b822b6c499dd8ef3e1b09e87
   m_configObjects: {}

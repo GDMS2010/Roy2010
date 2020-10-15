@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     public int health;
     public State currState;
 
-    public List<Transform> PatrolPoints;
+    private List<Transform> PatrolPoints;
 
     public GameObject player;
     public int patrolIndex;
@@ -36,6 +36,12 @@ public class Enemy : MonoBehaviour
         if (!player)
         {
             Debug.LogError("Enemy Can't find Player!");
+        }
+        //(instantiating the prefab) find patrol points
+        PatrolPoints = new List<Transform>();
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("PatrolPoint"))
+        {
+            PatrolPoints.Add(obj.transform);
         }
         timer = idleTime;
     }
