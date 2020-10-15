@@ -1,6 +1,6 @@
-Bob;Hey there!;false;1
-Bob;Can you get me some food;True;No;2;-10;A little;3;5;Okay sure have it all;4;10;
-Bob;Well thats not ok;false;5;
-Bob;Thank you;false;false;5;
-Bob;Thanks so much!;false;5;
-Player;Later Bob;false;-1;
+Jessica;hey i was wondering;false;1;PixelCharacterAssets/Jessica/Jessica_Idle;
+Jessica;while you're out there can you look for some [random candy];false;2;PixelCharacterAssets/Jessica/Jessica_Idle;
+Jessica;i know it s silly but i used to eat them when i was a kid and they alway help ground me when i was stressed i know this is way more then a normal situation but i just thought is should try;true;Yeah Sure;3;5;If I have time;4;2;get them your self;5;-10;PixelCharacterAssets/Jessica/Jessica_Idle;
+Jessica;Thank you so much!;false;-1;PixelCharacterAssets/Jessica/Jessica_Happy;
+Jessica;Oh Okay;false;-1;PixelCharacterAssets/Jessica/Jessica_Sad;
+Jessica;Fine have it your way!;false;-1;PixelCharacterAssets/Jessica/Jessica_Angry;

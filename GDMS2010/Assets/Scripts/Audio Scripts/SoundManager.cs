@@ -72,6 +72,9 @@ public static class SoundManager
             GameObject soundGameObject = new GameObject("3D Sound");
             soundGameObject.transform.position = _transform.position;
             soundGameObject.transform.SetParent(_transform);
+            //Add the tag "Sound" for enemy AI;
+            soundGameObject.AddComponent<BoxCollider>();
+            soundGameObject.transform.tag = "Sound";
 
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
 

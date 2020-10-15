@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
+    public Sprite icon;
     public const int MAXLV = 5;
     public string Name;
     public bool unlocked = false;
@@ -11,7 +13,7 @@ public class Weapon : MonoBehaviour
     public int Damage;
     [Range(0.1f,99f)]
     public float FireRate;
-    [Range(1,99)]
+    [Range(1,1000)]
     public int MagazineSize;
 
     [Range(0,5)]
@@ -37,6 +39,11 @@ public class Weapon : MonoBehaviour
     public List<int> DmgPerLv;
     public List<float> FRPerLv;
     public List<int> MagPerLv;
+
+    public int currentAmmo;
+    public int MaxAmmo;
+    public int currentTotalAmmo;
+    GameHUD hud;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +51,8 @@ public class Weapon : MonoBehaviour
         Damage = DmgPerLv[DamageLv];
         FireRate = FRPerLv[FireRateLv];
         MagazineSize = MagPerLv[MagazineLv];
+
+        hud = FindObjectOfType<GameHUD>();
     }
 
     // Update is called once per frame
@@ -109,5 +118,31 @@ public class Weapon : MonoBehaviour
         if (MagazineLv == MAXLV)
             return -1;
         return MagPerLv[MagazineLv + 1];
+    }
+
+    public void Firing()
+    {
+        if(currentAmmo > 0)
+        {
+            currentAmmo -= 1;
+            hud.setCurrentAmmo(currentAmmo);
+        }
+    }
+
+    public void Reload()
+    {
+        int empty = MagazineSize - currentAmmo;
+        if (currentTotalAmmo >= empty)
+        {
+            currentAmmo = MagazineSize;
+            currentTotalAmmo -= empty;
+        }
+        else
+        {
+            currentAmmo += currentTotalAmmo;
+            currentTotalAmmo = 0;
+        }
+        hud.setCurrentAmmo(currentAmmo);
+        hud.setMaxAmmo(currentTotalAmmo);
     }
 }

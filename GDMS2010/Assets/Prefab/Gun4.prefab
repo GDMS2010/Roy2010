@@ -43,11 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45cf1193e1d0a54885ebc58f8394c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Gun1
+  icon: {fileID: 21300000, guid: ff0a300d22813ed418ffc6a9cd7bd155, type: 3}
+  Name: Gun4
   unlocked: 0
   Damage: 10
   FireRate: 1
-  MagazineSize: 15
+  MagazineSize: 100
   DamageLv: 0
   FireRateLv: 0
   MagazineLv: 0
@@ -81,4 +82,7 @@ MonoBehaviour:
   - 1.6
   - 1.8
   - 2
-  MagPerLv: 0f0000001100000013000000160000001a0000001e000000
+  MagPerLv: 1100000013000000160000001a0000001e00000022000000
+  currentAmmo: 100
+  MaxAmmo: 85
+  currentTotalAmmo: 85

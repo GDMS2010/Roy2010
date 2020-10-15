@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(SphereCollider))]
 public class Enemy : MonoBehaviour
 {
-    public enum State { Idle, Patrol, Alerted, Chase, Attack, Dead}
+    public enum State { Idle, Patrol, Alerted, Search, Chase, Attack, Dead}
     public float visualScanDistance;
     public float hearingDistance;
     public Animator animator;
@@ -25,9 +26,13 @@ public class Enemy : MonoBehaviour
     public float alertTime = 5f;
     public float attackRange = 1f;
     float timer;
+
+    Vector3 voicePos;
+    bool isHearSth = false;
     // Start is called before the first frame update
     void Start()
     {
+        SoundManager.Initialize();
         transform.tag = "Enemy";
         agent = GetComponent<NavMeshAgent>();
         agent.speed = patrolSpeed;
@@ -44,6 +49,7 @@ public class Enemy : MonoBehaviour
             PatrolPoints.Add(obj.transform);
         }
         timer = idleTime;
+        GetComponent<SphereCollider>().radius = hearingDistance;
     }
 
     // Update is called once per frame
@@ -70,6 +76,13 @@ public class Enemy : MonoBehaviour
                         currState = State.Chase;
                         timer = idleTime;
                     }
+                    if (isHearSth)
+                    {
+                        animator.SetBool("IsIdle", false);
+                        animator.SetBool("IsWalking", true);
+                        currState = State.Search;
+                        timer = 2;
+                    }
                 }
                 break;
             case State.Patrol:
@@ -80,6 +93,11 @@ public class Enemy : MonoBehaviour
                     {
                         animator.SetBool("IsWalking", false);
                         currState = State.Chase;
+                    }
+                    if (isHearSth)
+                    {
+                        currState = State.Search;
+                        timer = 2;
                     }
                 }
                 break;
@@ -101,6 +119,39 @@ public class Enemy : MonoBehaviour
                     if (foundPlayer)
                     {
                         animator.SetBool("Alert", false);
+                        currState = State.Chase;
+                    }
+                }
+                break;
+            case State.Search:
+                {
+                    if(isHearSth)
+                    {
+                        agent.SetDestination(voicePos);
+                        animator.SetBool("IsIdle", false);
+                        animator.SetBool("IsWalking", true);
+                        timer = 2f;
+                        isHearSth = false;
+                    }     
+                    if(!agent.pathPending && agent.remainingDistance < 0.01f)
+                    {
+                        animator.SetBool("IsWalking", false);
+                        animator.SetBool("IsIdle", true);
+                        timer -= Time.deltaTime;
+                        if(timer < 0)
+                        {
+                            timer = idleTime;
+                            currState = State.Idle;
+                            voicePos = Vector3.zero;
+                            isHearSth = false;
+                        }
+                    }
+                    if(foundPlayer)
+                    {
+                        animator.SetBool("IsWalking", false);
+                        animator.SetBool("IsIdle", false);
+                        voicePos = Vector3.zero;
+                        isHearSth = false;
                         currState = State.Chase;
                     }
                 }
@@ -173,11 +224,6 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
-    public bool isHear()
-    {
-        return false;
-    }
-
     void Patrol()
     {
         if(PatrolPoints.Count > 1)
@@ -203,11 +249,6 @@ public class Enemy : MonoBehaviour
         float distance = toPlayer.magnitude;
         if (distance > visualScanDistance)
             return false;
-
-
-
-
-
         return true;
     }
 
@@ -218,5 +259,21 @@ public class Enemy : MonoBehaviour
         if (distance < attackRange)
             return true;
         return false;
+    }
+
+    void HearSomething(Vector3 pos)
+    {
+        if(voicePos != pos)
+        {
+            isHearSth = true;
+            voicePos = pos;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject.tag);
+        if (other.tag == "Sound")
+            HearSomething(other.transform.position);
     }
 }
