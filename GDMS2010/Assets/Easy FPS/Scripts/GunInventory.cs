@@ -11,6 +11,7 @@ public class GunInventory : MonoBehaviour {
 	public GameObject currentGun;
 	private Animator currentHAndsAnimator;
 	private int currentGunCounter = 0;
+	private List<GameHUD> subscriptions;
 
 	[Tooltip("Put Strings of weapon objects from Resources Folder.")]
 	public List<string> gunsIHave = new List<string>();
@@ -138,6 +139,7 @@ public class GunInventory : MonoBehaviour {
 				GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
 				currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
 				AssignHandsAnimator(currentGun);
+				NotifyWeaponChange();
 			}
 			else if(currentGun.name.Contains("Sword")){
 				currentHAndsAnimator.SetBool("changingWeapon", true);
@@ -151,6 +153,7 @@ public class GunInventory : MonoBehaviour {
 				GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
 				currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
 				AssignHandsAnimator(currentGun);
+				NotifyWeaponChange();
 			}
 		}
 		else{
@@ -158,6 +161,7 @@ public class GunInventory : MonoBehaviour {
 			currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
 
 			AssignHandsAnimator(currentGun);
+			NotifyWeaponChange();
 		}
 
 
@@ -263,6 +267,21 @@ public class GunInventory : MonoBehaviour {
 	private Vector2 vec2(Vector2 _vec2){
 		return new Vector2(Screen.width * _vec2.x / 100, Screen.height * _vec2.y / 100);
 	}
+
+	public void SubscribeToWeaponChange(GameHUD sub)
+    {
+		subscriptions = new List<GameHUD>();
+		subscriptions.Add(sub);
+		sub.loadNewWeapon(currentGun);
+    }
+
+	private void NotifyWeaponChange()
+    {
+        for (int i = 0; i < subscriptions.Count; i++)
+        {
+			subscriptions[i].loadNewWeapon(currentGun);
+        }
+    }
 	//######################################################
 
 	/*

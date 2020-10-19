@@ -49,7 +49,9 @@ public class Enemy : MonoBehaviour
             PatrolPoints.Add(obj.transform);
         }
         timer = idleTime;
-        GetComponent<SphereCollider>().radius = hearingDistance;
+        SphereCollider sCol = GetComponent<SphereCollider>();
+        if (sCol)
+            sCol.radius = hearingDistance;
     }
 
     // Update is called once per frame
