@@ -26,6 +26,8 @@ public class Interaction : MonoBehaviour
     UnityEngine.UI.Image characterPortrait  = null;
     [SerializeField]
     UnityEngine.GameObject characterPortraitObject = null;
+    [SerializeField]
+    UnityEngine.GameObject ventureButton = null;
 
     // text file to dialouge box loading variables
     TextAsset textFile;
@@ -47,6 +49,7 @@ public class Interaction : MonoBehaviour
         dialougeBox.SetActive(false);
         dialougeOptionsBox.SetActive(false);
         characterPortraitObject.SetActive(false);
+        ventureButton.SetActive(true);
         //SoundManager.PlaySound(SoundManager.Sound.BackgroundMusic);
     }
 
@@ -76,6 +79,7 @@ public class Interaction : MonoBehaviour
 
                     // Assigns Dialouge to true and sets params
                     dialougeBox.SetActive(true);
+                    ventureButton.SetActive(false);
                     AdvanceDialouge(nextIndex);
                 }
             }
@@ -112,6 +116,7 @@ public class Interaction : MonoBehaviour
             dialougeBox.SetActive(false);
             dialougeOptionsBox.SetActive(false);
             characterPortraitObject.SetActive(false);
+            ventureButton.SetActive(true);
             nextIndex = 0;
             return;
         }
