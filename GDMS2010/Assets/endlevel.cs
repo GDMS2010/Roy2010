@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class endlevel : MonoBehaviour
 {
+    public bool unlocked = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            SceneManager.LoadScene("Camp");
+            if (unlocked)
+                SceneManager.LoadScene("Camp");
         }
     }
     // Start is called before the first frame update
