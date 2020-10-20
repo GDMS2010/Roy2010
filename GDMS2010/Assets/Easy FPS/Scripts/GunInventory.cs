@@ -11,12 +11,14 @@ public class GunInventory : MonoBehaviour {
 	public GameObject currentGun;
 	private Animator currentHAndsAnimator;
 	private int currentGunCounter = 0;
-	private List<GameHUD> subscriptions;
+	private GameHUD hud;
 
 	[Tooltip("Put Strings of weapon objects from Resources Folder.")]
 	public List<string> gunsIHave = new List<string>();
 	[Tooltip("Icons from weapons.(Fetched when you run the game)*MUST HAVE ICONS WITH CORRESPONDING NAMES IN RESOUCES FOLDER*")]
 	public Texture[] icons;
+
+    public List<GameObject> Weapons;
 
 	[HideInInspector]
 	public float switchWeaponCooldown;
@@ -32,12 +34,25 @@ public class GunInventory : MonoBehaviour {
 
 		if (gunsIHave.Count == 0)
 			print ("No guns in the inventory");
-	}
+    }
+    private void Start()
+    {
+        hud = FindObjectOfType<GameHUD>();
+        if (hud)
+        {
+            for (int i = 0; i < Weapons.Count; i++)
+            {
+                hud.setMagazineSize((int)Weapons[i].GetComponent<GunScript>().amountOfBulletsPerLoad, i);
+                hud.setCurrentAmmo((int)Weapons[i].GetComponent<GunScript>().bulletsInTheGun, i);
+                hud.setTotalAmmo((int)Weapons[i].GetComponent<GunScript>().bulletsIHave, i);
+            }
+        }
+    }
 
-	/*
+    /*
 	*Waits some time then calls for a waepon spawn
 	*/
-	IEnumerator SpawnWeaponUponStart(){
+    IEnumerator SpawnWeaponUponStart(){
 		yield return new WaitForSeconds (0.5f);
 		StartCoroutine("Spawn",0);
 	}
@@ -49,6 +64,8 @@ public class GunInventory : MonoBehaviour {
 	 */
 	void Update(){
 
+        if (!hud)
+            hud = FindObjectOfType<GameHUD>();
 		switchWeaponCooldown += 1 * Time.deltaTime;
 		if(switchWeaponCooldown > 1.2f && Input.GetKey(KeyCode.LeftShift) == false){
 			Create_Weapon();
@@ -91,6 +108,7 @@ public class GunInventory : MonoBehaviour {
 			if(currentGunCounter > gunsIHave.Count-1){
 				currentGunCounter = 0;
 			}
+            //currentGun = Weapons[currentGunCounter];
 			StartCoroutine("Spawn",currentGunCounter);
 		}
 		if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxis("Mouse ScrollWheel") < 0){
@@ -100,8 +118,9 @@ public class GunInventory : MonoBehaviour {
 			if(currentGunCounter < 0){
 				currentGunCounter = gunsIHave.Count-1;
 			}
-			StartCoroutine("Spawn",currentGunCounter);
-		}
+            //currentGun = Weapons[currentGunCounter];
+            StartCoroutine("Spawn",currentGunCounter);
+        }
 
 		/*
 		 * Keypad numbers
@@ -109,13 +128,15 @@ public class GunInventory : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Alpha1) && currentGunCounter != 0){
 			switchWeaponCooldown = 0;
 			currentGunCounter = 0;
-			StartCoroutine("Spawn",currentGunCounter);
-		}
+            //currentGun = Weapons[currentGunCounter];
+            StartCoroutine("Spawn",currentGunCounter);
+        }
 		if(Input.GetKeyDown(KeyCode.Alpha2) && currentGunCounter != 1){
 			switchWeaponCooldown = 0;
 			currentGunCounter = 1;
-			StartCoroutine("Spawn",currentGunCounter);
-		}
+            //currentGun = Weapons[currentGunCounter];
+            StartCoroutine("Spawn",currentGunCounter);
+        }
 
 	}
 
@@ -123,55 +144,102 @@ public class GunInventory : MonoBehaviour {
 	 * This method is called from Create_Weapon() upon pressing arrow up/down or scrolling the mouse wheel,
 	 * It will check if we carry a gun and destroy it, and its then going to load a gun prefab from our Resources Folder.
 	 */
-	IEnumerator Spawn(int _redniBroj){
-		if (weaponChanging)
-			weaponChanging.Play ();
-		else
-			print ("Missing Weapon Changing music clip.");
-		if(currentGun){
-			if(currentGun.name.Contains("Gun")){
+	//IEnumerator Spawn(int _redniBroj){
+	//	if (weaponChanging)
+	//		weaponChanging.Play ();
+	//	else
+	//		print ("Missing Weapon Changing music clip.");
+	//	if(currentGun){
+	//		if(currentGun.name.Contains("Gun")){
 
-				currentHAndsAnimator.SetBool("changingWeapon", true);
+	//			currentHAndsAnimator.SetBool("changingWeapon", true);
 
-				yield return new WaitForSeconds(0.8f);//0.8 time to change waepon, but since there is no change weapon animation there is no need to wait fo weapon taken down
-				Destroy(currentGun);
+	//			yield return new WaitForSeconds(0.8f);//0.8 time to change waepon, but since there is no change weapon animation there is no need to wait fo weapon taken down
+	//			Destroy(currentGun);
 
-				GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
-				currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
-				AssignHandsAnimator(currentGun);
-				NotifyWeaponChange();
-			}
-			else if(currentGun.name.Contains("Sword")){
-				currentHAndsAnimator.SetBool("changingWeapon", true);
-				yield return new WaitForSeconds(0.25f);//0.5f
+	//			GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
+	//			currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
+	//			AssignHandsAnimator(currentGun);
+	//			NotifyWeaponChange();
+	//		}
+	//		else if(currentGun.name.Contains("Sword")){
+	//			currentHAndsAnimator.SetBool("changingWeapon", true);
+	//			yield return new WaitForSeconds(0.25f);//0.5f
 
-				currentHAndsAnimator.SetBool("changingWeapon", false);
+	//			currentHAndsAnimator.SetBool("changingWeapon", false);
 
-				yield return new WaitForSeconds(0.6f);//1
-				Destroy(currentGun);
+	//			yield return new WaitForSeconds(0.6f);//1
+	//			Destroy(currentGun);
 
-				GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
-				currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
-				AssignHandsAnimator(currentGun);
-				NotifyWeaponChange();
-			}
-		}
-		else{
-			GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
-			currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
+	//			GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
+	//			currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
+	//			AssignHandsAnimator(currentGun);
+	//			NotifyWeaponChange();
+	//		}
+	//	}
+	//	else{
+	//		GameObject resource = (GameObject) Resources.Load(gunsIHave[_redniBroj].ToString());
+	//		currentGun = (GameObject) Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
 
-			AssignHandsAnimator(currentGun);
-			NotifyWeaponChange();
-		}
-
-
-	}
+	//		AssignHandsAnimator(currentGun);
+	//		NotifyWeaponChange();
+	//	}
 
 
-	/*
+	//}
+
+    IEnumerator Spawn(int _redniBroj)
+    {
+        if (weaponChanging)
+            weaponChanging.Play();
+        else
+            print("Missing Weapon Changing music clip.");
+        if (currentGun)
+        {
+            hud.OpenList();
+            hud.setIndex(_redniBroj);
+            if (currentGun.name.Contains("Gun"))
+            {
+
+                currentHAndsAnimator.SetBool("changingWeapon", true);
+
+                yield return new WaitForSeconds(0.8f);//0.8 time to change waepon, but since there is no change weapon animation there is no need to wait fo weapon taken down
+                currentGun.gameObject.SetActive(false);
+                currentGun = Weapons[_redniBroj];
+                currentGun.gameObject.SetActive(true);
+                AssignHandsAnimator(currentGun);
+                //NotifyWeaponChange();
+            }
+            else if (currentGun.name.Contains("Sword"))
+            {
+                currentHAndsAnimator.SetBool("changingWeapon", true);
+                yield return new WaitForSeconds(0.25f);//0.5f
+
+                currentHAndsAnimator.SetBool("changingWeapon", false);
+
+                yield return new WaitForSeconds(0.6f);//1
+                Destroy(currentGun);
+
+                GameObject resource = (GameObject)Resources.Load(gunsIHave[_redniBroj].ToString());
+                currentGun = (GameObject)Instantiate(resource, transform.position, /*gameObject.transform.rotation*/Quaternion.identity);
+                AssignHandsAnimator(currentGun);
+                //NotifyWeaponChange();
+            }
+        }
+        else
+        {
+            currentGun = Weapons[_redniBroj];
+            currentGun.gameObject.SetActive(true);
+            AssignHandsAnimator(currentGun);
+            //NotifyWeaponChange();
+        }
+
+
+    }
+    /*
 	* Assigns Animator to the script so we can use it in other scripts of a current gun.
 	*/
-	void AssignHandsAnimator(GameObject _currentGun){
+    void AssignHandsAnimator(GameObject _currentGun){
 		if(_currentGun.name.Contains("Gun")){
 			currentHAndsAnimator = currentGun.GetComponent<GunScript>().handsAnimator;
 		}
@@ -181,15 +249,15 @@ public class GunInventory : MonoBehaviour {
 	 * Unity buil-in method to draw GUI.
 	 * From here I am listing thourhg guns I have and drawing corresponding images on the sceen.
 	 */
-	void OnGUI(){
+	//void OnGUI(){
 
-		if(currentGun){
-			for(int i = 0; i < gunsIHave.Count; i++){
-				DrawCorrespondingImage(i);
-			}
-		}
+	//	if(currentGun){
+	//		for(int i = 0; i < gunsIHave.Count; i++){
+	//			DrawCorrespondingImage(i);
+	//		}
+	//	}
 
-	}
+	//}
 
 	[Header("GUI Gun preview variables")]
 	[Tooltip("Weapon icons style to pick.")]
@@ -268,20 +336,20 @@ public class GunInventory : MonoBehaviour {
 		return new Vector2(Screen.width * _vec2.x / 100, Screen.height * _vec2.y / 100);
 	}
 
-	public void SubscribeToWeaponChange(GameHUD sub)
-    {
-		subscriptions = new List<GameHUD>();
-		subscriptions.Add(sub);
-		sub.loadNewWeapon(currentGun);
-    }
+	//public void SubscribeToWeaponChange(GameHUD sub)
+ //   {
+	//	subscriptions = new List<GameHUD>();
+	//	subscriptions.Add(sub);
+	//	sub.loadNewWeapon(currentGun);
+ //   }
 
-	private void NotifyWeaponChange()
-    {
-        for (int i = 0; i < subscriptions.Count; i++)
-        {
-			subscriptions[i].loadNewWeapon(currentGun);
-        }
-    }
+	//private void NotifyWeaponChange()
+ //   {
+ //       for (int i = 0; i < subscriptions.Count; i++)
+ //       {
+	//		subscriptions[i].loadNewWeapon(currentGun);
+ //       }
+ //   }
 	//######################################################
 
 	/*

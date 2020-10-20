@@ -40,44 +40,34 @@ public class GameHUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-            if (!isWeaponListOpen)
-            {
-                isWeaponListOpen = true;
-                StartCoroutine(OpenWeaponList());
-            }
-            weaponIndex = (weaponIndex + 1) % 4;
-            Debug.Log(weaponIndex);
-            weaponList[0].transform.position = weaponList[weaponIndex + 1].transform.position;
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            if (!isWeaponListOpen)
-            {
-                isWeaponListOpen = true;
-                StartCoroutine(OpenWeaponList());
-            }
-            weaponIndex = (weaponIndex - 1) % 4;
-            if (weaponIndex < 0)
-                weaponIndex += 4;
-            Debug.Log(weaponIndex);
-            weaponList[0].transform.position = weaponList[weaponIndex + 1].transform.position;
-        }
+        //if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        //{
+        //    if (!isWeaponListOpen)
+        //    {
+        //        isWeaponListOpen = true;
+        //        StartCoroutine(OpenWeaponList());
+        //    }
+        //    weaponIndex = (weaponIndex + 1) % 2;
+        //    Debug.Log(weaponIndex);
+        //    weaponList[0].transform.position = weaponList[weaponIndex + 1].transform.position;
+        //}
+        //if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        //{
+        //    if (!isWeaponListOpen)
+        //    {
+        //        isWeaponListOpen = true;
+        //        StartCoroutine(OpenWeaponList());
+        //    }
+        //    weaponIndex = (weaponIndex - 1) % 2;
+        //    if (weaponIndex < 0)
+        //        weaponIndex += 2;
+        //    Debug.Log(weaponIndex);
+        //    weaponList[0].transform.position = weaponList[weaponIndex + 1].transform.position;
+        //}
         if (Input.GetMouseButtonDown(0) && isWeaponListOpen)
         {
             StartCoroutine(CloseWeaponList());
             isWeaponListOpen = false;
-        }
-
-        if (Input.GetMouseButton(0) && timer < 0)
-        {
-            inv.weaponList[weaponIndex].Firing();
-            timer = 0.05f;
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            inv.weaponList[weaponIndex].Reload();
         }
         if (timer >= 0)
             timer -= Time.deltaTime;
@@ -105,21 +95,24 @@ public class GameHUD : MonoBehaviour
             index = weaponIndex;
         weaponList[index + 1].transform.Find("Cur").GetComponent<Text>().text = value.ToString();
 
-        float amo = (float)inv.weaponList[index].currentAmmo / (float)inv.weaponList[index].MagazineSize;
+        float amo = (float)value / float.Parse(weaponList[index + 1].transform.Find("Clip").GetComponent<Text>().text);
         weaponList[index + 1].transform.Find("Image").GetComponent<Image>().fillAmount = amo;
     }
 
-    public void setMaxAmmo(int value, int _weaponIndex = -1)
+    public void setMagazineSize(int value, int _weaponIndex = -1)
+    {
+        int index = _weaponIndex;
+        if (index == -1)
+            index = weaponIndex;
+        weaponList[index + 1].transform.Find("Clip").GetComponent<Text>().text = value.ToString();
+    }
+
+    public void setTotalAmmo(int value, int _weaponIndex = -1)
     {
         int index = _weaponIndex;
         if (index == -1)
             index = weaponIndex;
         weaponList[index + 1].transform.Find("Max").GetComponent<Text>().text = value.ToString();
-    }
-
-    public void setMaxMagazine(int value, int weaponIndex = -1)
-    {
-
     }
 
     public void debug_health(int value)
@@ -167,6 +160,15 @@ public class GameHUD : MonoBehaviour
 
     }
 
+    public void OpenList()
+    {
+        if (!isWeaponListOpen)
+        {
+            isWeaponListOpen = true;
+            StartCoroutine(OpenWeaponList());
+        }
+    }
+
     void InitWeaponList()
     {
         inv = FindObjectOfType<Inventory>();
@@ -194,12 +196,18 @@ public class GameHUD : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         GunInventory gInv = player.GetComponent<GunInventory>();
-        gInv.SubscribeToWeaponChange(this);
+        //gInv.SubscribeToWeaponChange(this);
     }
 
     public void loadNewWeapon(GameObject obj)
     {
         curWeapon = obj;
         //gunProperties = obj.GetComponent<GunScript>();
+    }
+
+    public void setIndex(int v)
+    {
+        weaponIndex = v;
+        weaponList[0].transform.position = weaponList[weaponIndex + 1].transform.position;
     }
 }

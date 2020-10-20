@@ -143,6 +143,6 @@ public class Weapon : MonoBehaviour
             currentTotalAmmo = 0;
         }
         hud.setCurrentAmmo(currentAmmo);
-        hud.setMaxAmmo(currentTotalAmmo);
+        hud.setTotalAmmo(currentTotalAmmo);
     }
 }

@@ -10,6 +10,7 @@ public class Script_Ammo : MonoBehaviour
         {
             GunScript gs = GameObject.FindGameObjectWithTag("Weapon").GetComponent<GunScript>();
             gs.bulletsIHave += 10;
+            FindObjectOfType<GameHUD>().setTotalAmmo((int)gs.bulletsIHave);
             Destroy(this.gameObject);
         }
     }
