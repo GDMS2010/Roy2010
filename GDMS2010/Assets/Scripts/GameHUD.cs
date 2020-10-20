@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class GameHUD : MonoBehaviour
     Image HealthBarFill;
     int weaponIndex = 0;
     bool isWeaponListOpen;
+    public GameObject curWeapon;
+    private GunScript gunProperties;
 
     int h = 100;
     Inventory inv;
@@ -31,6 +34,7 @@ public class GameHUD : MonoBehaviour
         }
         InitWeaponList();
         InitPlayer();
+        ReferenceWeapon();
     }
 
     // Update is called once per frame
@@ -66,7 +70,7 @@ public class GameHUD : MonoBehaviour
             isWeaponListOpen = false;
         }
 
-        if (Input.GetMouseButton(0) && timer <0)
+        if (Input.GetMouseButton(0) && timer < 0)
         {
             inv.weaponList[weaponIndex].Firing();
             timer = 0.05f;
@@ -77,6 +81,9 @@ public class GameHUD : MonoBehaviour
         }
         if (timer >= 0)
             timer -= Time.deltaTime;
+
+        //if (gunProperties)
+        //    setCurrentAmmo((int)gunProperties.bulletsIHave);
     }
 
     public void setCurrentHealth(int value)
@@ -163,6 +170,8 @@ public class GameHUD : MonoBehaviour
     void InitWeaponList()
     {
         inv = FindObjectOfType<Inventory>();
+        if (!inv)
+            return;
         for (int i = 0; i < inv.weaponList.Count; i++)
         {
             weaponList[i + 1].transform.Find("Image").GetComponent<Image>().sprite = inv.weaponList[i].icon;
@@ -179,5 +188,18 @@ public class GameHUD : MonoBehaviour
         //HealthBar.maxValue = PlayerMaxHealth;
         //HealthBar.value = playerHealth
 
+    }
+
+    void ReferenceWeapon()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GunInventory gInv = player.GetComponent<GunInventory>();
+        gInv.SubscribeToWeaponChange(this);
+    }
+
+    public void loadNewWeapon(GameObject obj)
+    {
+        curWeapon = obj;
+        //gunProperties = obj.GetComponent<GunScript>();
     }
 }
