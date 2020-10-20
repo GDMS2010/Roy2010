@@ -2371,7 +2371,8 @@ MonoBehaviour:
   dialouge: 0
   npcName: Jessica
   Filenames:
-  - Dialouge/CompanionA/TestDialogue
+  - Dialouge/Jessica/Dialogue1
+  - Dialouge/Jessica/Dialogue2
 --- !u!65 &669535972
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5971,7 +5972,9 @@ MonoBehaviour:
   affection: 0
   dialouge: 0
   npcName: Alex
-  Filenames: []
+  Filenames:
+  - Dialouge/CompanionB/Dialogue1
+  - Dialouge/CompanionB/Dialogue2
 --- !u!1 &1706838254
 GameObject:
   m_ObjectHideFlags: 0
@@ -6584,7 +6587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1823417520
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6990,7 +6993,9 @@ MonoBehaviour:
   affection: 0
   dialouge: 0
   npcName: Danny
-  Filenames: []
+  Filenames:
+  - Dialouge/CompanionC/Dialogue1
+  - Dialouge/CompanionC/Dialogue2
 --- !u!1 &1956609306
 GameObject:
   m_ObjectHideFlags: 0

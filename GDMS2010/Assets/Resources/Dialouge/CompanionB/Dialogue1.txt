@@ -1,0 +1,6 @@
+Alex;I am really great friends with Kylie and her father Darrel.;false;1;PixelCharacterAssets/Alex/Alex_Idle;
+Alex;I get tired of her complaining all the time about him and I get jealous of her.;false;2;PixelCharacterAssets/Alex/Alex_Idle;
+Alex;Maybe I should not say that, can you keep this between us?;true;No worries times are tough right now.;3;5;I won't tell, but you could be nicer.;4;2;I think I need to talk to Kylie now.;5;-3;PixelCharacterAssets/Alex/Alex_Happy;
+Alex;Okay see you later;false;-1;PixelCharacterAssets/Alex/Alex_Happy;
+Alex;I know you dont have to tell me;false;-1;PixelCharacterAssets/Alex/Alex_Sad;
+Alex;Then go tell her!;false;-1;PixelCharacterAssets/Alex/Alex_Angry;
