@@ -1,0 +1,6 @@
+Alex;Before all this I was studying to be an artist.;false;1;PixelCharacterAssets/Alex/Alex_Idle;
+Alex;My parents always told me that it was dumb, but I did it anyways.;false;2;PixelCharacterAssets/Alex/Alex_Idle;
+Alex;Could you please find me some art supplies? I really miss it.;true;Of course, I will make the effort.;3;5;I guess, seems like a waste of time.;4;2;Your parents were right, art is dumb.;5;-2;PixelCharacterAssets/Alex/Alex_Idle;
+Alex;Thank you so much!;false;-1;PixelCharacterAssets/Alex/Alex_Happy;
+Alex;Why are you mocking me..;false;-1;PixelCharacterAssets/Alex/Alex_Sad;
+Alex;How could you!;false;-1;PixelCharacterAssets/Alex/Alex_Angry;

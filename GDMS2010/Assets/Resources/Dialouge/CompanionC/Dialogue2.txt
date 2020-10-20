@@ -1,0 +1,6 @@
+Danny;Somedays I really miss when I used to be a rock climber instructor.;false;1;PixelCharacterAssets/Danny/Danny_Idle;
+Danny;There are somedays where I like to set up boxes and items in the camp to act like I am still teaching my classes.;false;2;PixelCharacterAssets/Danny/Danny_Idle;
+Danny;Do you think that is weird?;true;No distractions are never a bad idea.;3;5;It is a little weird, but that is okay.;4;2;Yeah you kind of a weirdo.;5;-3;PixelCharacterAssets/Danny/Danny_Happy;
+Danny;Thats what I'm saying!;false;-1;PixelCharacterAssets/Danny/Danny_Happy;
+Danny;Ok thank you;false;-1;PixelCharacterAssets/Danny/Danny_Sad;
+Danny;Damn thats cold;false;-1;PixelCharacterAssets/Danny/Danny_Angry;
