@@ -1,0 +1,6 @@
+Jessica;I am surprised you are even talking to me.;false;1;PixelCharacterAssets/Jessica/Jessica_Idle;
+Jessica;Most of the people here only come to me for medicine help not to talk.;false;2;PixelCharacterAssets/Jessica/Jessica_Idle;
+Jessica;Wait are you only talking to me for medicine?;true;I was just trying to get to know you.;3;5;You are the one that just assumed.;4;2;I mean medicine would be nice.;5;-3;PixelCharacterAssets/Jessica/Jessica_Happy;
+Jessica;Thats what I'm saying!;false;-1;PixelCharacterAssets/Jessica/Jessica_Happy;
+Jessica;Ok thank you;false;-1;PixelCharacterAssets/Jessica/Jessica_Sad;
+Jessica;Damn thats cold;false;-1;PixelCharacterAssets/Jessica/Jessica_Angry;

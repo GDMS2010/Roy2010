@@ -11,6 +11,8 @@ public class Script_Health : MonoBehaviour
     [SerializeField][Tooltip("Assign a display to show current health")]
     Text display;
 
+    GameHUD hud;
+
     public bool destroyOnDeath = true;
 
     float maxHealth = 0;
@@ -18,6 +20,12 @@ public class Script_Health : MonoBehaviour
     void Start()
     {
         maxHealth = health;
+        if(this.gameObject.tag == "Player")
+        {
+            hud = FindObjectOfType<GameHUD>();
+            hud.setMaxHealth((int)maxHealth);
+            hud.setCurrentHealth((int)health);
+        }     
     }
 
     // Update is called once per frame
@@ -29,6 +37,8 @@ public class Script_Health : MonoBehaviour
     public void takeDamage(float dmg)
     {
         health -= dmg;
+        if (this.gameObject.tag == "Player")
+            hud.setCurrentHealth((int)health);
         if (health <= 0)
             die();
     }

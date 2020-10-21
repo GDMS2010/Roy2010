@@ -2371,7 +2371,8 @@ MonoBehaviour:
   dialouge: 0
   npcName: Jessica
   Filenames:
-  - Dialouge/CompanionA/TestDialogue
+  - Dialouge/Jessica/Dialogue1
+  - Dialouge/Jessica/Dialogue2
 --- !u!65 &669535972
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5956,6 +5957,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2008288062}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1706660537
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706660536}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.833054, y: 2.461282, z: 4.3540697}
+  m_Center: {x: 0.0007299781, y: 1.230641, z: -0.41246998}
 --- !u!114 &1706660540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5971,7 +5985,9 @@ MonoBehaviour:
   affection: 0
   dialouge: 0
   npcName: Alex
-  Filenames: []
+  Filenames:
+  - Dialouge/CompanionB/Dialogue1
+  - Dialouge/CompanionB/Dialogue2
 --- !u!1 &1706838254
 GameObject:
   m_ObjectHideFlags: 0
@@ -6584,7 +6600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1823417520
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6975,6 +6991,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1512723020}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1954035915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954035914}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.833054, y: 2.461282, z: 4.3540697}
+  m_Center: {x: 0.0007299781, y: 1.230641, z: -0.41246998}
 --- !u!114 &1954035918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6990,7 +7019,9 @@ MonoBehaviour:
   affection: 0
   dialouge: 0
   npcName: Danny
-  Filenames: []
+  Filenames:
+  - Dialouge/CompanionC/Dialogue1
+  - Dialouge/CompanionC/Dialogue2
 --- !u!1 &1956609306
 GameObject:
   m_ObjectHideFlags: 0

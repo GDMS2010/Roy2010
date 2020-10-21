@@ -1,0 +1,6 @@
+Jessica;Since all this started, I have really missed twonkies.;false;1;PixelCharacterAssets/Jessica/Jessica_Idle;
+Jessica;You know the chocolate sponge cake with an icing filling.;false;2;PixelCharacterAssets/Jessica/Jessica_Idle;
+Jessica;Do you think you could get me one while you are out?;true;Yes, I will make sure to get us both one.;3;5;I guess, if I have time.;4;2;I am pretty sure those do not exist.;5;-3;PixelCharacterAssets/Jessica/Jessica_Happy;
+Jessica;Thats what I'm saying!;false;-1;PixelCharacterAssets/Jessica/Jessica_Happy;
+Jessica;Ok thank you;false;-1;PixelCharacterAssets/Jessica/Jessica_Sad;
+Jessica;Damn thats cold;false;-1;PixelCharacterAssets/Jessica/Jessica_Angry;
