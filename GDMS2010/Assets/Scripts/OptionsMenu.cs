@@ -16,6 +16,7 @@ public class OptionsMenu : MonoBehaviour
     public Slider sfxSlider;
     public Slider musicSlider;
     public Slider dialogueSlider;
+    public GameObject menu;
 
     private void Start()
     {
@@ -46,11 +47,21 @@ public class OptionsMenu : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat("musicVol");
         dialogueSlider.value = PlayerPrefs.GetFloat("dialougeVol");
 
+        menu.SetActive(false);
+        Time.timeScale = 1.0f;
+
     }
 
     private void Awake()
     {
         audioMixer = Resources.Load<AudioMixer>("MainAudioMixer");
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
     }
     public void SetMaster(float volume)
     {
@@ -94,5 +105,19 @@ public class OptionsMenu : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void Pause()
+    {
+        if (Time.timeScale == 0)
+        {
+            menu.SetActive(false);
+            Time.timeScale = 1.0f;
+        }
+        else
+        {
+            menu.SetActive(true);
+            Time.timeScale = 0.0f;
+        }
     }
 }

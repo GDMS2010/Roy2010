@@ -50,6 +50,10 @@ public class Interaction : MonoBehaviour
         dialougeOptionsBox.SetActive(false);
         characterPortraitObject.SetActive(false);
         ventureButton.SetActive(true);
+
+        // Setting cursor to visible and confined
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         //SoundManager.PlaySound(SoundManager.Sound.BackgroundMusic);
     }
 

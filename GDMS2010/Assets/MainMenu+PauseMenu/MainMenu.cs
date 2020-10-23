@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        //SceneManager.LoadScene("InsertCampSceneName");
+        SceneManager.LoadScene("RefugeeCamp");
     }
 
     public void QuitGame()
