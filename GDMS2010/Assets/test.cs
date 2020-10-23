@@ -50,12 +50,11 @@ public class test : StateMachineBehaviour
         hits = Physics.SphereCastAll(t.position, 3f, t.forward, 2.1f);
         foreach (RaycastHit ishit in hits)
         {
-            if (ishit.transform.tag == "Player")
+            if (ishit.transform.tag == "Player"  || ishit.transform.tag == "Companion")
             {
+                if (ishit.transform.GetComponent<Script_Health>())
+                    ishit.transform.GetComponent<Script_Health>().Hit(t.gameObject ,5);
                 Debug.Log("Enemy has hit");
-                if (!h)
-                    h = ishit.transform.GetComponent<Script_Health>();
-                h.takeDamage(5);
             }
         }
     }

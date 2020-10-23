@@ -9,6 +9,7 @@ TagManager:
   - Weapon
   - Enemy
   - PatrolPoint
+  - Companion
   layers:
   - Default
   - TransparentFX

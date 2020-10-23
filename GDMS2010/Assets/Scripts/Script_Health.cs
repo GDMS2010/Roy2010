@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Script_Health : MonoBehaviour
 {
 
     [SerializeField]
-    float health;
+    int health;
     [SerializeField][Tooltip("Assign a display to show current health")]
     Text display;
 
     GameHUD hud;
+    public UnityEvent<GameObject> HitEvent;
+    public UnityEvent DeathEvent;
 
     public bool destroyOnDeath = true;
-
-    float maxHealth = 0;
+    public bool IsAlive = true;
+    int maxHealth = 0;
+    int companionID;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +27,14 @@ public class Script_Health : MonoBehaviour
         if(this.gameObject.tag == "Player")
         {
             hud = FindObjectOfType<GameHUD>();
-            hud.setMaxHealth((int)maxHealth);
-            hud.setCurrentHealth((int)health);
-        }     
+            hud.setMaxHealth(maxHealth);
+            hud.setCurrentHealth(health);
+        }
+        if (this.gameObject.tag == "Companion")
+        {
+            hud = FindObjectOfType<GameHUD>();
+            companionID = hud.addCompanion(maxHealth, transform.name);
+        }
     }
 
     // Update is called once per frame
@@ -34,17 +43,35 @@ public class Script_Health : MonoBehaviour
         DisplayHealth();
     }
 
-    public void takeDamage(float dmg)
+    public void Heal(int value)
     {
-        health -= dmg;
+        health += value;
+        health = health > maxHealth ? maxHealth : health;
+    }
+
+    public void Hit(GameObject attacker, int value)
+    {
+        health -= value;
         if (this.gameObject.tag == "Player")
             hud.setCurrentHealth((int)health);
+        if (this.gameObject.tag == "Companion")
+        {
+            hud.setCompanionHP(health, companionID);
+        }
         if (health <= 0)
+        {
             die();
+        }
+        else
+        {
+            HitEvent.Invoke(attacker);
+        }
     }
 
     private void die()
     {
+        IsAlive = false;
+        DeathEvent.Invoke();
         //run death animation
 
         //destroy game object after death animation

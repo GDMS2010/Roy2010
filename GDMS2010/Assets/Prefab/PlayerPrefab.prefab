@@ -1244,6 +1244,7 @@ MonoBehaviour:
   - NewGun_semi
   - NewGun_auto
   icons: []
+  Weapons: []
   switchWeaponCooldown: 0
   menuStyle: 0
   spacing: 10

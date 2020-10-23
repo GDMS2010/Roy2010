@@ -36,7 +36,7 @@ public class BulletScript : MonoBehaviour {
 				{
 					Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
 					Script_Health enemyHealth = hit.transform.gameObject.GetComponent<Script_Health>();
-					enemyHealth.takeDamage(10);
+					enemyHealth.Hit(null, 10);
 					Destroy(gameObject);
 				}
 			}		

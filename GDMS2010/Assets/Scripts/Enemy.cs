@@ -7,7 +7,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(SphereCollider))]
 public class Enemy : MonoBehaviour
 {
-    public enum State { Idle, Patrol, Alerted, Search, Chase, Attack, Dead}
+    public enum State { Idle, Patrol, Alerted, Search, Chase, Attack, Dead }
     public float visualScanDistance;
     public float hearingDistance;
     public Animator animator;
@@ -16,7 +16,8 @@ public class Enemy : MonoBehaviour
 
     private List<Transform> PatrolPoints;
 
-    public GameObject player;
+    public List<GameObject> players;
+    public GameObject target;
     public int patrolIndex;
     public bool foundPlayer;
     public float patrolSpeed = 1.5f;
@@ -25,20 +26,30 @@ public class Enemy : MonoBehaviour
     public float idleTime = 5f;
     public float alertTime = 5f;
     public float attackRange = 1f;
+    public int Damage = 5;
     float timer;
 
     Vector3 voicePos;
     bool isHearSth = false;
+    public bool isAlive = true;
+    public float nextAttack;
+    public float attackSpeed = 2f;
     // Start is called before the first frame update
     void Start()
     {
-        SoundManager.Initialize();
+        players = new List<GameObject>();
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        if(go)
+            players.Add(go);
+        foreach (var item in GameObject.FindGameObjectsWithTag("Companion"))
+        {
+            players.Add(item);
+        }
         transform.tag = "Enemy";
         agent = GetComponent<NavMeshAgent>();
         agent.speed = patrolSpeed;
         animator = GetComponentInChildren<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (!player)
+        if (players.Count == 0)
         {
             Debug.LogError("Enemy Can't find Player!");
         }
@@ -49,9 +60,7 @@ public class Enemy : MonoBehaviour
             PatrolPoints.Add(obj.transform);
         }
         timer = idleTime;
-        SphereCollider sCol = GetComponent<SphereCollider>();
-        if (sCol)
-            sCol.radius = hearingDistance;
+        //GetComponent<SphereCollider>().radius = hearingDistance;
     }
 
     // Update is called once per frame
@@ -66,7 +75,7 @@ public class Enemy : MonoBehaviour
                 {
                     animator.SetBool("IsIdle", true);
                     timer -= Time.deltaTime;
-                    if(timer<0)
+                    if (timer < 0)
                     {
                         animator.SetBool("IsIdle", false);
                         currState = State.Patrol;
@@ -105,14 +114,14 @@ public class Enemy : MonoBehaviour
                 break;
             case State.Alerted:
                 {
-                    if(agent.remainingDistance < 1f)
+                    if (agent.remainingDistance < 1f)
                     {
                         agent.SetDestination(transform.position);
                         animator.SetBool("Alert", true);
                         timer -= Time.deltaTime;
                         agent.speed = patrolSpeed;
-                    }    
-                    if(timer < 0)
+                    }
+                    if (timer < 0)
                     {
                         animator.SetBool("Alert", false);
                         currState = State.Idle;
@@ -127,20 +136,20 @@ public class Enemy : MonoBehaviour
                 break;
             case State.Search:
                 {
-                    if(isHearSth)
+                    if (isHearSth)
                     {
                         agent.SetDestination(voicePos);
                         animator.SetBool("IsIdle", false);
                         animator.SetBool("IsWalking", true);
                         timer = 2f;
                         isHearSth = false;
-                    }     
-                    if(!agent.pathPending && agent.remainingDistance < 0.01f)
+                    }
+                    if (!agent.pathPending && agent.remainingDistance < 0.01f)
                     {
                         animator.SetBool("IsWalking", false);
                         animator.SetBool("IsIdle", true);
                         timer -= Time.deltaTime;
-                        if(timer < 0)
+                        if (timer < 0)
                         {
                             timer = idleTime;
                             currState = State.Idle;
@@ -148,7 +157,7 @@ public class Enemy : MonoBehaviour
                             isHearSth = false;
                         }
                     }
-                    if(foundPlayer)
+                    if (foundPlayer)
                     {
                         animator.SetBool("IsWalking", false);
                         animator.SetBool("IsIdle", false);
@@ -168,12 +177,12 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        if (!player)
+                        if (!target)
                         {
                             currState = State.Alerted;
                             break;
                         }
-                        animator.SetBool("IsRunning", agent.SetDestination(player.transform.position));
+                        animator.SetBool("IsRunning", agent.SetDestination(target.transform.position));
                         agent.speed = foundPlayerSpeed;
                         if (!foundPlayer)
                         {
@@ -181,13 +190,13 @@ public class Enemy : MonoBehaviour
                             currState = State.Alerted;
                             timer = alertTime;
                         }
-                    }                
+                    }
                 }
                 break;
             case State.Attack:
                 {
-                    animator.SetTrigger("Attack");
-                    if(isPlayerNext())
+                    //animator.SetTrigger("Attack");
+                    if (isPlayerNext())
                     {
                         Attack();
                     }
@@ -199,6 +208,7 @@ public class Enemy : MonoBehaviour
                 currState = State.Idle;
                 break;
         }
+        nextAttack -= attackSpeed * Time.deltaTime;
     }
 
     public void walk()
@@ -206,18 +216,26 @@ public class Enemy : MonoBehaviour
         animator.SetBool("IsWalking", true);
     }
 
-    public void hit()
+    public void hit(int value)
     {
-        health--;
-        if (health == 0)
+        health -= value;
+        if (health <= 0)
+        {
             Death();
+        }
         else
-            animator.SetTrigger("Hit");
+        {
+            //animator.SetTrigger("Hit");
+        }
     }
 
     public void Death()
     {
+        agent.enabled = false;
+        currState = State.Dead;
         animator.SetBool("Death", true);
+        isAlive = false;
+        Destroy(this.gameObject, 3f);
     }
 
     public void _reset()
@@ -229,11 +247,27 @@ public class Enemy : MonoBehaviour
     public void Attack()
     {
         animator.SetTrigger("Attack");
+        //if (nextAttack <= 0)
+        //{
+        //    Script_Health dmg = target.GetComponent<Script_Health>();
+        //    if (dmg.IsAlive)
+        //    {
+        //        target.GetComponent<Script_Health>().Hit(this.gameObject, Damage);
+        //        nextAttack = 1;
+        //        animator.SetTrigger("Attack");
+        //    }
+        //    else
+        //    {
+        //        players.Remove(target);
+        //        target = null;
+        //        currState = State.Alerted;
+        //    }
+        //}
     }
 
     void Patrol()
     {
-        if(PatrolPoints.Count > 1)
+        if (PatrolPoints.Count > 1)
         {
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
@@ -246,30 +280,22 @@ public class Enemy : MonoBehaviour
 
     bool isPlayerNearby()
     {
-        if(!player)
-            player = GameObject.FindGameObjectWithTag("Player");
-        if (!player)
+        foreach (var p in players)
         {
-            Debug.LogWarning("Enemy Can't find Player!");
-            return false;
+            Vector3 toPlayer = p.transform.position - this.transform.position;
+            float distance = toPlayer.magnitude;
+            if (distance < visualScanDistance)
+            {
+                target = p;
+                return true;
+            }
         }
-        Vector3 toPlayer = player.transform.position - this.transform.position;
-        float distance = toPlayer.magnitude;
-        if (distance > visualScanDistance)
-            return false;
-        return true;
+        return false;
     }
 
     bool isPlayerNext()
     {
-        if (!player)
-            player = GameObject.FindGameObjectWithTag("Player");
-        if (!player)
-        {
-            Debug.LogWarning("Enemy Can't find Player!");
-            return false;
-        }
-        Vector3 toPlayer = player.transform.position - this.transform.position;
+        Vector3 toPlayer = target.transform.position - this.transform.position;
         float distance = toPlayer.magnitude;
         if (distance < attackRange)
             return true;
@@ -278,7 +304,7 @@ public class Enemy : MonoBehaviour
 
     void HearSomething(Vector3 pos)
     {
-        if(voicePos != pos)
+        if (voicePos != pos)
         {
             isHearSth = true;
             voicePos = pos;

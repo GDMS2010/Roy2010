@@ -13,14 +13,16 @@ public class GameHUD : MonoBehaviour
     bool isWeaponListOpen;
     public GameObject curWeapon;
     private GunScript gunProperties;
+    public GameObject com;
 
     int h = 100;
     Inventory inv;
     List<GameObject> weaponList;
     float timer;
 
+    int comCount = 0;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         HealthBar = transform.Find("HealthBar").GetComponent<Slider>();
         HealthText = transform.Find("HealthBar").Find("Health").GetComponent<Text>();
@@ -34,7 +36,6 @@ public class GameHUD : MonoBehaviour
         }
         InitWeaponList();
         InitPlayer();
-        ReferenceWeapon();
     }
 
     // Update is called once per frame
@@ -123,6 +124,21 @@ public class GameHUD : MonoBehaviour
         Debug.Log(h);
     }
 
+    public int addCompanion(int MaxHP, string name)
+    {
+        int result = comCount;
+        com.SetActive(true);
+        com.GetComponent<Slider>().maxValue = MaxHP;
+        com.GetComponent<Slider>().value = MaxHP;
+        return result;
+    }
+
+    public void setCompanionHP(int value, int ID)
+    {
+        com.GetComponent<Slider>().value = value;
+        com.transform.Find("Health").GetComponent<Text>().text = value.ToString(); 
+    }
+
     IEnumerator OpenWeaponList()
     {
         weaponList[0].SetActive(true);
@@ -192,12 +208,6 @@ public class GameHUD : MonoBehaviour
 
     }
 
-    void ReferenceWeapon()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GunInventory gInv = player.GetComponent<GunInventory>();
-        //gInv.SubscribeToWeaponChange(this);
-    }
 
     public void loadNewWeapon(GameObject obj)
     {
