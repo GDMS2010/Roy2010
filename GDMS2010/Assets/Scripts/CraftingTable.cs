@@ -89,7 +89,7 @@ public class CraftingTable : MonoBehaviour
             }
         }
         else
-            Debug.Log("Craft table say: ???");
+           // Debug.Log("Craft table say: ???");
         currencyUpdate();
         visualUpdate();
     }
