@@ -44,33 +44,20 @@ public class ExplosiveBarrel : MonoBehaviour
         Collider[] collidersToDeactivate = Physics.OverlapSphere(transform.position, radius);
         foreach (Collider collider in collidersToDeactivate)
         {
-            Animator anim = collider.GetComponent<Animator>();
+            RagdollController ragdoll = collider.GetComponent<RagdollController>();
 
-            if (anim != null)
+            if (ragdoll != null)
             {
-                StartCoroutine(RagDoll(anim));
+                ragdoll.ActivateRagdoll();
             }
 
-            Enemy enemy = collider.GetComponent<Enemy>();
-
-            if (enemy != null)
-            {
-                enemy.enabled = false;
-            }
-
-            NavMeshAgent navMesh = collider.GetComponent<NavMeshAgent>();
-
-            if (navMesh != null)
-            {
-                navMesh.enabled = false;
-            }
 
             Script_Health _Health = collider.GetComponent<Script_Health>();
 
 
             if (_Health != null)
             {
-                _Health.Hit(transform.gameObject, 50);
+                _Health.Hit(transform.gameObject, 100);
             }
         }
 

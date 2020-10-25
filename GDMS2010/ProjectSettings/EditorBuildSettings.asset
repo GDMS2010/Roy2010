@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MainMenu+PauseMenu/Main Menu.unity
     guid: af3f62f420fc8f34dbcc678f3d94f0fe
+  - enabled: 1
+    path: Assets/Scenes/DownTown.unity
+    guid: 5beb14b751f292746976525c6cb81445
+  - enabled: 1
+    path: Assets/MainMenu+PauseMenu/Store/GroceryStore.unity
+    guid: f6f63dcd32ee3fc46bc96f5523eb40ee
   m_configObjects: {}
