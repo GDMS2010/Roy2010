@@ -70,7 +70,7 @@ public class ExplosiveBarrel : MonoBehaviour
 
             if (_Health != null)
             {
-                _Health.takeDamage(50);
+                _Health.Hit(transform.gameObject, 50);
             }
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Script_Health))]
+[RequireComponent(typeof(CompanionAIOption))]
 public class CompanionAIMaster : MonoBehaviour
 {
     public string Name;
@@ -15,7 +16,6 @@ public class CompanionAIMaster : MonoBehaviour
     public bool Interacted = false;
 
     public Transform GoalPosition; //Ultimate Goal Position;
-    public GameObject Ammo;
 
     public State currState;
     public Mood currMood;
@@ -42,6 +42,8 @@ public class CompanionAIMaster : MonoBehaviour
     public float attackDistance = 10f;
     float nextRound = 1f;
     bool IsReloading = false;
+
+    CompanionAIOption AIO;
 
     public enum State
     {
@@ -73,6 +75,7 @@ public class CompanionAIMaster : MonoBehaviour
         anim.SetFloat("ShootingSpeed", roundPerSec);
         GetComponent<Script_Health>().HitEvent.AddListener(hit);
         GetComponent<Script_Health>().DeathEvent.AddListener(Die);
+        AIO = GetComponent<CompanionAIOption>();
     }
 
     // Update is called once per frame
@@ -189,11 +192,17 @@ public class CompanionAIMaster : MonoBehaviour
                         if (IsCloseToPlayer())
                         {
                             if (affection > 99)
-                                Player.GetComponent<Script_Health>().Heal(20);
+                                AIO.AffecsionP99();
                             else if (affection > 50)
-                                Player.GetComponent<Script_Health>().Heal(10);
-                            else if(affection > 25)
-                                Instantiate(Ammo, transform.position, transform.rotation);
+                                AIO.AffecsionP50();
+                            else if (affection > 25)
+                                AIO.AffecsionP25();
+                            else if (affection > 0)
+                                AIO.Affecsion0();
+                            else if (affection > -25)
+                                AIO.AffecsionN25();
+                            else if (affection > -50)
+                                AIO.AffecsionN50();
                             Interacted = true;
                         }
                         else
@@ -364,6 +373,10 @@ public class CompanionAIMaster : MonoBehaviour
         currTarget = getCloestTarget();
     }
 
+    public GameObject getPlayer()
+    {
+        return Player;
+    }
 
     /// Animation Event
     public void DoneReloading()

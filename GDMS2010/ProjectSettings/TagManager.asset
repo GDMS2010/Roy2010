@@ -9,7 +9,8 @@ TagManager:
   - Weapon
   - Enemy
   - PatrolPoint
-  - Companion
+  - Dialouge
+  - Craft
   layers:
   - Default
   - TransparentFX
