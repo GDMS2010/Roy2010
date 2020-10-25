@@ -23,8 +23,11 @@ public class Script_Health : MonoBehaviour
         if(this.gameObject.tag == "Player")
         {
             hud = FindObjectOfType<GameHUD>();
-            hud.setMaxHealth((int)maxHealth);
-            hud.setCurrentHealth((int)health);
+            if (hud)
+            {
+                hud.setMaxHealth((int)maxHealth);
+                hud.setCurrentHealth((int)health);
+            }
         }     
     }
 
@@ -66,5 +69,12 @@ public class Script_Health : MonoBehaviour
     public float getHealth()
     {
         return health;
+    }
+    
+    public void setHealth(float amount)
+    {
+        health += amount;
+        if (health > 100)
+            health = 100;
     }
 }

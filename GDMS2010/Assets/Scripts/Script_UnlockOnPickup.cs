@@ -7,7 +7,8 @@ public class Script_UnlockOnPickup : MonoBehaviour
     private void OnDisable()
     {
         endlevel el =  GameObject.FindObjectOfType<endlevel>();
-        el.unlocked = true;
+        if (el)
+            el.unlocked = true;
     }
     // Start is called before the first frame update
     void Start()
