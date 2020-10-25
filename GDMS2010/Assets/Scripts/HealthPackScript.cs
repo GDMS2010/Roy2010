@@ -9,7 +9,7 @@ public class HealthPackScript : MonoBehaviour
         if (collision.transform.tag == "Player")
         {
             Script_Health health = collision.transform.GetComponent<Script_Health>();
-            health.setHealth(10);
+            health.Heal(10);
             Destroy(this.gameObject);
         }
     }

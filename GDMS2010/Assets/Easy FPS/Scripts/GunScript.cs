@@ -40,8 +40,6 @@ public class GunScript : MonoBehaviour {
 	 * Collection the variables upon awake that we need.
 	 */
 	void Awake(){
-        bulletsInTheGun = amountOfBulletsPerLoad;
-
         mls = GameObject.FindGameObjectWithTag("Player").GetComponent<MouseLookScript>();
 		player = mls.transform;
 		mainCamera = mls.myCamera;
@@ -86,7 +84,8 @@ public class GunScript : MonoBehaviour {
 	Update loop calling for methods that are descriped below where they are initiated.
 	*/
 	void Update(){
-        if(!gunIsSet)
+        if (!gunIsSet)
+            gunsetup();
         if (!hud)
             hud = FindObjectOfType<GameHUD>();
 
@@ -104,6 +103,18 @@ public class GunScript : MonoBehaviour {
 
 		CrossHairExpansionWhenWalking();  
 	}
+    void gunsetup()
+    {
+        int d = 0, m = 0;
+        float s = 0;
+        GetComponent<Weapon>().GunSetup(ref d, ref m, ref s);
+        damage = d;
+        amountOfBulletsPerLoad = m;
+        roundsPerSecond = s;
+        bulletsInTheGun = amountOfBulletsPerLoad;
+
+        gunIsSet = true;
+    }
 
 	/*
 	*Update loop calling for methods that are descriped below where they are initiated.

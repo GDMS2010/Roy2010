@@ -73,7 +73,13 @@ public class Script_Health : MonoBehaviour
         //destroy game object after death animation
         Script_DropLoot hasLoot = this.transform.GetComponent<Script_DropLoot>();
         if (hasLoot)
+        {
             hasLoot.Drop();
+            Inventory inv =
+            FindObjectOfType<Inventory>();
+            inv.earnGold(10);
+            inv.earnMetal(10);
+        }
         if (destroyOnDeath)
             Destroy(this.gameObject);
     }

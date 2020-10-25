@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Script_Health))]
 [RequireComponent(typeof(CompanionAIOption))]
 public class CompanionAIMaster : MonoBehaviour
@@ -175,12 +176,12 @@ public class CompanionAIMaster : MonoBehaviour
                 }
             }
             else
-            {                
+            {
                 anim.SetBool("IsCaution", false);
                 anim.SetBool("Fire", false);
                 agent.speed = walkSpeed;
-                walk();
-                agent.SetDestination(GoalPosition.position);
+                setDes();
+
                 if (currAmmo < 10)
                 {
                     Reload();
@@ -207,6 +208,7 @@ public class CompanionAIMaster : MonoBehaviour
                         }
                         else
                         {
+                            walk();
                             agent.SetDestination(Player.transform.position);
                         }
                     }
@@ -234,9 +236,11 @@ public class CompanionAIMaster : MonoBehaviour
                 nextRound = 1f;
 
                 float val = Random.Range(0, 1f);
-                if(val < accuracy)
-                    target.hit(damage);
-                if (!target.isAlive)
+                if (val < accuracy)
+                {
+                    target.gameObject.GetComponent<Script_Health>().Hit(this.gameObject, damage);
+                }
+                if (!target.gameObject.GetComponent<Script_Health>().IsAlive)
                 {
                     targetList.Remove(target);
                     currTarget = getCloestTarget();
@@ -333,7 +337,7 @@ public class CompanionAIMaster : MonoBehaviour
     /// AI
     bool IsCloseToPlayer()
     {
-        if(!Player)
+        if (!Player)
             return false;
         Vector3 dis = Player.transform.position - transform.position;
         return dis.magnitude < 3f ? true : false;
@@ -371,6 +375,49 @@ public class CompanionAIMaster : MonoBehaviour
             direction = stepAngle * direction;
         }
         currTarget = getCloestTarget();
+    }
+
+    void setDes()
+    {
+        if (GoalPosition != null)      //if have target position
+        {
+            //If far, then walk to it
+            if ((transform.position - GoalPosition.position).magnitude > 0.5)
+            {
+                agent.SetDestination(GoalPosition.position);
+                walk();
+            }
+            else                    //if close, then stand still
+            {
+                anim.SetBool("Walking", false);
+            }
+
+        }
+        else if (Player)        //If has player, follow player
+        {
+            if ((transform.position - Player.transform.position).magnitude > 3f)
+            {
+                agent.SetDestination(Player.transform.position);
+                walk();
+            }
+            else
+            {
+                anim.SetBool("Walking", false);
+            }
+        }
+        else
+        {
+            GameObject go = FindObjectOfType<Enemy>().gameObject;
+            if(go)
+            {
+                agent.SetDestination(go.transform.position);
+                walk();
+            }
+            else
+            {
+                anim.SetBool("Walking", false);
+            }
+        }
     }
 
     public GameObject getPlayer()
