@@ -47,17 +47,13 @@ public class Script_Health : MonoBehaviour
     {
         health += value;
         health = health > maxHealth ? maxHealth : health;
+        HUD_HPupdate();
     }
 
     public void Hit(GameObject attacker, int value)
     {
         health -= value;
-        if (this.gameObject.tag == "Player")
-            hud.setCurrentHealth((int)health);
-        if (this.gameObject.tag == "Companion")
-        {
-            hud.setCompanionHP(health, companionID);
-        }
+        HUD_HPupdate();
         if (health <= 0)
         {
             die();
@@ -93,5 +89,15 @@ public class Script_Health : MonoBehaviour
     public float getHealth()
     {
         return health;
+    }
+
+    void HUD_HPupdate()
+    {
+        if (this.gameObject.tag == "Player")
+            hud.setCurrentHealth((int)health);
+        if (this.gameObject.tag == "Companion")
+        {
+            hud.setCompanionHP(health, companionID);
+        }
     }
 }

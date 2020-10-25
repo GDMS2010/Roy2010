@@ -37750,7 +37750,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &953946502
 PrefabInstance:
@@ -50565,7 +50565,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 632184226480126469}
+    m_TransformParent: {fileID: 4677499490123783773}
     m_Modifications:
     - target: {fileID: 142272, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
       propertyPath: m_Name
@@ -50589,15 +50589,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469018, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 469018, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 469018, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 469018, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -50618,6 +50618,10 @@ PrefabInstance:
     - target: {fileID: 469018, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400676, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
+      propertyPath: currentStyle
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52d7c5ee3e0cf43d9b5aab3e5df17e7d, type: 3}
@@ -50675,12 +50679,12 @@ MonoBehaviour:
   - {x: 50, y: 50}
   DmgPerLv: 1400000016000000180000001a0000001c0000001e000000
   FRPerLv:
-  - 1.5
-  - 1.7
-  - 1.9
-  - 2.1
-  - 2.3
-  - 2.5
+  - 15
+  - 17
+  - 19
+  - 21
+  - 23
+  - 25
   MagPerLv: 1e00000023000000280000002d0000003200000037000000
   currentAmmo: 30
   MaxAmmo: 150
@@ -56149,7 +56153,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 632184226480126469}
+    m_TransformParent: {fileID: 4677499490123783773}
     m_Modifications:
     - target: {fileID: 167390, guid: d263be518b43c45958a9fabf6650fd2d, type: 3}
       propertyPath: m_Name
@@ -56169,15 +56173,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 456086, guid: d263be518b43c45958a9fabf6650fd2d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 456086, guid: d263be518b43c45958a9fabf6650fd2d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 456086, guid: d263be518b43c45958a9fabf6650fd2d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 456086, guid: d263be518b43c45958a9fabf6650fd2d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56258,12 +56262,12 @@ MonoBehaviour:
   - {x: 50, y: 50}
   DmgPerLv: 0a0000000c0000000e000000100000001200000014000000
   FRPerLv:
-  - 1
-  - 1.2
-  - 1.4
-  - 1.6
-  - 1.8
-  - 2
+  - 10
+  - 12
+  - 14
+  - 16
+  - 18
+  - 20
   MagPerLv: 0f0000001100000013000000160000001a0000001e000000
   currentAmmo: 15
   MaxAmmo: 75
@@ -82140,13 +82144,13 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2144033790}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &632184226480126469
+--- !u!4 &4677499490123783773
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632184226480126470}
+  m_GameObject: {fileID: 4677499490123783774}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -82154,9 +82158,9 @@ Transform:
   - {fileID: 1437253492}
   - {fileID: 1283386790}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &632184226480126470
+--- !u!1 &4677499490123783774
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82164,9 +82168,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 632184226480126469}
+  - component: {fileID: 4677499490123783773}
+  - component: {fileID: 5200576976552887037}
   m_Layer: 0
-  m_Name: Arsenal
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85845,6 +85850,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5200576976552887037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4677499490123783774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3207e8cf9445c2a4888adb3e49c0b54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold: 0
+  metal: 0
+  weaponList:
+  - {fileID: 1437253494}
+  - {fileID: 1283386792}
 --- !u!1001 &8515912241504899122
 PrefabInstance:
   m_ObjectHideFlags: 0

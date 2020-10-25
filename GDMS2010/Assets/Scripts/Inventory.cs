@@ -7,6 +7,23 @@ public class Inventory : MonoBehaviour
     public int gold;
     public int metal;
     public List<Weapon> weaponList;
+    protected static Inventory i;
+    public static Inventory Instance
+    {
+        get
+        {
+            if (i != null)
+                return i;
+
+            i = FindObjectOfType<Inventory>();
+            if (i != null)
+                return i;
+
+            GameObject tm = new GameObject("Inventory");
+            i = tm.AddComponent<Inventory>();
+            return i;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

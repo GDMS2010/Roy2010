@@ -20,11 +20,11 @@ public class GunScript : MonoBehaviour {
 
 	[Header("Bullet properties")]
 	[Tooltip("Preset value to tell with how many bullets will our waepon spawn aside.")]
-	public float bulletsIHave = 20;
+	public int bulletsIHave = 20;
 	[Tooltip("Preset value to tell with how much bullets will our waepon spawn inside rifle.")]
-	public float bulletsInTheGun = 5;
+	public int bulletsInTheGun = 5;
 	[Tooltip("Preset value to tell how much bullets can one magazine carry.")]
-	public float amountOfBulletsPerLoad = 5;
+	public int amountOfBulletsPerLoad = 5;
 
 	private Transform player;
 	private Camera cameraComponent;
@@ -34,13 +34,15 @@ public class GunScript : MonoBehaviour {
 
     GameHUD hud;
 
+    public int damage = 10;
+
 	/*
 	 * Collection the variables upon awake that we need.
 	 */
 	void Awake(){
+        bulletsInTheGun = amountOfBulletsPerLoad;
 
-
-		mls = GameObject.FindGameObjectWithTag("Player").GetComponent<MouseLookScript>();
+        mls = GameObject.FindGameObjectWithTag("Player").GetComponent<MouseLookScript>();
 		player = mls.transform;
 		mainCamera = mls.myCamera;
 		secondCamera = GameObject.FindGameObjectWithTag("SecondCamera").GetComponent<Camera>();
@@ -58,6 +60,7 @@ public class GunScript : MonoBehaviour {
 		rotationLastX= mls.currentCameraXRotation;
         hud = FindObjectOfType<GameHUD>();
 	}
+    bool gunIsSet = false;
 
 
 	[HideInInspector]
@@ -83,7 +86,7 @@ public class GunScript : MonoBehaviour {
 	Update loop calling for methods that are descriped below where they are initiated.
 	*/
 	void Update(){
-
+        if(!gunIsSet)
         if (!hud)
             hud = FindObjectOfType<GameHUD>();
 
@@ -427,7 +430,10 @@ public class GunScript : MonoBehaviour {
 
 				int randomNumberForMuzzelFlash = Random.Range(0,5);
 				if (bullet)
+                {
+                    bullet.GetComponent<BulletScript>().Damage = damage;
 					Instantiate (bullet, bulletSpawnPlace.transform.position, bulletSpawnPlace.transform.rotation);
+                }
 				else
 					print ("Missing the bullet prefab");
 				holdFlash = Instantiate(muzzelFlash[randomNumberForMuzzelFlash], muzzelSpawn.transform.position /*- muzzelPosition*/, muzzelSpawn.transform.rotation * Quaternion.Euler(0,0,90) ) as GameObject;
@@ -493,7 +499,7 @@ public class GunScript : MonoBehaviour {
 					bulletsIHave -= amountOfBulletsPerLoad - bulletsInTheGun;
 					bulletsInTheGun = amountOfBulletsPerLoad;
 				} else if (bulletsIHave - amountOfBulletsPerLoad < 0) {
-					float valueForBoth = amountOfBulletsPerLoad - bulletsInTheGun;
+					int valueForBoth = amountOfBulletsPerLoad - bulletsInTheGun;
 					if (bulletsIHave - valueForBoth < 0) {
 						bulletsInTheGun += bulletsIHave;
 						bulletsIHave = 0;

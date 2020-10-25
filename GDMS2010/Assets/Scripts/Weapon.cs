@@ -44,6 +44,7 @@ public class Weapon : MonoBehaviour
     public int MaxAmmo;
     public int currentTotalAmmo;
     GameHUD hud;
+    GunScript gs;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +54,7 @@ public class Weapon : MonoBehaviour
         MagazineSize = MagPerLv[MagazineLv];
 
         hud = FindObjectOfType<GameHUD>();
+        gs = GetComponent<GunScript>();
     }
 
     // Update is called once per frame
@@ -144,5 +146,12 @@ public class Weapon : MonoBehaviour
         }
         hud.setCurrentAmmo(currentAmmo);
         hud.setTotalAmmo(currentTotalAmmo);
+    }
+
+    public void GunSetup(ref int _dmg, ref int _magazine, ref float _speed)
+    {
+        _dmg = Damage;
+        _magazine = MagazineSize;
+        _speed = FireRate;
     }
 }
