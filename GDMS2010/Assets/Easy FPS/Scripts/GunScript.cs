@@ -32,6 +32,8 @@ public class GunScript : MonoBehaviour {
 
 	private PlayerMovementScript pmS;
 
+    GameHUD hud;
+
 	/*
 	 * Collection the variables upon awake that we need.
 	 */
@@ -54,7 +56,7 @@ public class GunScript : MonoBehaviour {
 
 		rotationLastY = mls.currentYRotation;
 		rotationLastX= mls.currentCameraXRotation;
-
+        hud = FindObjectOfType<GameHUD>();
 	}
 
 
@@ -82,7 +84,10 @@ public class GunScript : MonoBehaviour {
 	*/
 	void Update(){
 
-		Animations();
+        if (!hud)
+            hud = FindObjectOfType<GameHUD>();
+
+        Animations();
 
 		GiveCameraScriptMySensitvity();
 
@@ -94,9 +99,7 @@ public class GunScript : MonoBehaviour {
 
 		Sprint(); //iff we have the gun you sprint from here, if we are gunless then its called from movement script
 
-		CrossHairExpansionWhenWalking();
-
-
+		CrossHairExpansionWhenWalking();  
 	}
 
 	/*
@@ -438,6 +441,7 @@ public class GunScript : MonoBehaviour {
 
 				waitTillNextFire = 1;
 				bulletsInTheGun -= 1;
+                hud.setCurrentAmmo((int)bulletsInTheGun);
 			}
 				
 			else{
@@ -498,7 +502,9 @@ public class GunScript : MonoBehaviour {
 						bulletsInTheGun += valueForBoth;
 					}
 				}
-			} else {
+                hud.setCurrentAmmo((int)bulletsInTheGun);
+                hud.setTotalAmmo((int)bulletsIHave);
+            } else {
 				reloadSound_source.Stop ();
 
 				print ("Reload interrupted via meele attack");

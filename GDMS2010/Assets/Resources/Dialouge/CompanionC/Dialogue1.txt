@@ -1,0 +1,6 @@
+Danny;I know the world is a little grim, but I try to be the positive guy in all situations.;false;1;PixelCharacterAssets/Danny/Danny_Idle;
+Danny;It seems like everyone in the camp is sad all the time and I am the only one that still smiles.;false;2;PixelCharacterAssets/Danny/Danny_Idle;
+Danny;Can you bring back an item to lift everyone's spirits?;true;Sure, I can see what I can find.;3;5;I will try to get to it.;4;2;No everyone needs to be realistic.;5;-3;PixelCharacterAssets/Danny/Danny_Happy;
+Danny;Thanks amigo!;false;-1;PixelCharacterAssets/Danny/Danny_Happy;
+Danny;Ok sounds good;false;-1;PixelCharacterAssets/Danny/Danny_Sad;
+Danny;Fine then leave me alone;false;-1;PixelCharacterAssets/Danny/Danny_Angry;

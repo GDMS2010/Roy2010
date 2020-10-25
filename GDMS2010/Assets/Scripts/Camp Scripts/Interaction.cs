@@ -28,6 +28,8 @@ public class Interaction : MonoBehaviour
     UnityEngine.GameObject characterPortraitObject = null;
     [SerializeField]
     UnityEngine.GameObject ventureButton = null;
+    [SerializeField]
+    UnityEngine.GameObject craftTable = null;
 
     // text file to dialouge box loading variables
     TextAsset textFile;
@@ -50,6 +52,11 @@ public class Interaction : MonoBehaviour
         dialougeOptionsBox.SetActive(false);
         characterPortraitObject.SetActive(false);
         ventureButton.SetActive(true);
+        craftTable.SetActive(false);
+
+        // Setting cursor to visible and confined
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         //SoundManager.PlaySound(SoundManager.Sound.BackgroundMusic);
     }
 
@@ -82,6 +89,11 @@ public class Interaction : MonoBehaviour
                     ventureButton.SetActive(false);
                     AdvanceDialouge(nextIndex);
                 }
+            }
+            else if(Physics.Raycast(ray, out hit) && hit.collider.tag == "Craft" && dialougeBox.activeSelf == false)
+            {
+                craftTable.SetActive(true);
+                ventureButton.SetActive(false);
             }
         }
     }
@@ -182,6 +194,11 @@ public class Interaction : MonoBehaviour
             case 4:
                 current.GetComponent<BaseCompanion>().ModifyStat(BaseCompanion.Statistic.Affection, optionCAffection);
                 AdvanceDialouge(optionCIndex);
+                break;
+
+            case 5:
+                craftTable.SetActive(false);
+                ventureButton.SetActive(true);
                 break;
         }
     }

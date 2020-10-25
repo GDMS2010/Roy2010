@@ -168,6 +168,11 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
+                        if (!player)
+                        {
+                            currState = State.Alerted;
+                            break;
+                        }
                         animator.SetBool("IsRunning", agent.SetDestination(player.transform.position));
                         agent.speed = foundPlayerSpeed;
                         if (!foundPlayer)
@@ -245,7 +250,8 @@ public class Enemy : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
         if (!player)
         {
-            Debug.LogError("Enemy Can't find Player!");
+            Debug.LogWarning("Enemy Can't find Player!");
+            return false;
         }
         Vector3 toPlayer = player.transform.position - this.transform.position;
         float distance = toPlayer.magnitude;
@@ -256,6 +262,13 @@ public class Enemy : MonoBehaviour
 
     bool isPlayerNext()
     {
+        if (!player)
+            player = GameObject.FindGameObjectWithTag("Player");
+        if (!player)
+        {
+            Debug.LogWarning("Enemy Can't find Player!");
+            return false;
+        }
         Vector3 toPlayer = player.transform.position - this.transform.position;
         float distance = toPlayer.magnitude;
         if (distance < attackRange)
