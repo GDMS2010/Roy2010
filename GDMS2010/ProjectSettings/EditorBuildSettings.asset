@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MainMenu+PauseMenu/Main Menu.unity
     guid: af3f62f420fc8f34dbcc678f3d94f0fe
+  - enabled: 1
+    path: Assets/Scenes/DownTown.unity
+    guid: 5beb14b751f292746976525c6cb81445
   m_configObjects: {}

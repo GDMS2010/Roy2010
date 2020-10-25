@@ -29,11 +29,11 @@ public class LoadScene : MonoBehaviour
                 break;
 
             case "SuperMarket Button":
-                //LoadSceneString("");
+                LoadSceneString("GroceryStore");
                 break;
 
             case "Downtown Button":
-                //LoadSceneString("");
+                LoadSceneString("DownTown");
                 break;
 
             case "BackButton":
