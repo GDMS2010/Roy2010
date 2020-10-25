@@ -1529,7 +1529,21 @@ MonoBehaviour:
   affection: 0
   dialouge: 0
   npcName: Kylie
-  Filenames: []
+  Filenames:
+  - Dialouge/Kylie/Dialogue1
+--- !u!65 &480415661
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480415656}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.833054, y: 2.461282, z: 4.3540697}
+  m_Center: {x: 0.0007299781, y: 1.230641, z: -0.41246998}
 --- !u!1 &492978655
 GameObject:
   m_ObjectHideFlags: 0
